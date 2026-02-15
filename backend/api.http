@@ -16,3 +16,40 @@ Content-Type: application/json
     "email": "harsh@gmail.com",
     "password": "123456"
 }
+###
+GET http://localhost:8000/getUserAndProfile HTTP/1.1
+Content-Type: application/json
+
+{
+    "token": "d9d466c13b0e97ded64c9069426fb02f1b1f5884b1eaa28401e8c24460e5aa5f"
+}
+
+###
+GET http://localhost:8000/updateProfileData HTTP/1.1
+Content-Type: application/json
+
+{
+    "token": "d9d466c13b0e97ded64c9069426fb02f1b1f5884b1eaa28401e8c24460e5aa5f",
+  "bio": "Full Stack Developer focused on building scalable web applications and AI-driven tools.",
+  "currentpost": "MERN Stack Developer",
+  "pastwork": [
+    {
+      "company": "MeshUp",
+      "position": "Backend Developer",
+       "years": "2024"
+    }
+  ],
+  "education": [
+    {
+       "school": "ingraham",
+      "degree": "B.Tech",
+      "fieldofstudy": "full stack dev"
+     
+    }
+  ]
+}
+
+
+###
+GET http://localhost:8000/get_all_users HTTP/1.1
+Content-Type: application/json
