@@ -1,41 +1,54 @@
 import mongoose from "mongoose";
 
-const PostSchema = mongoose.Schema({
-    userId:{
+const postSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      index: true
+    },
+
+    body: {
+      type: String,
+      trim: true,
+      maxlength: 2000
+    },
+
+    media: {
+      type: String,
+      default: ""
+    },
+
+    mediaType: {
+      type: String,
+      enum: ["image", "video", "none"],
+      default: "none"
+    },
+
+    likes: [
+      {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
+      }
+    ],
+
+    isEdited: {
+      type: Boolean,
+      default: false
     },
-    body:{
-        type: String,
-        required: true
-    },
-    likes:{
-        type: Number,
-        default: 0
-    },
-    createdAt:{
-        type: Date,
-        default: Date.now
-    },
-    updatedAt:{
-        type: Date,
-        default: Date.now
-    },
-    media:{
-         type: String,
-         default: true
-    },
-    active:{
-        type: Boolean,
-        default: true
-    },
-    fileType:{
-        type: String,
-        default: ""
+
+    isDeleted: {
+      type: Boolean,
+      default: false
     }
-}); 
+  },
+  {
+    timestamps: true
+  }
+);
 
-const Post = mongoose.model("Post", PostSchema);
+// Feed optimization
+postSchema.index({ createdAt: -1 });
 
-export default Post;
-
+export default mongoose.model("Post", postSchema);

@@ -1,59 +1,79 @@
 import mongoose from "mongoose";
 
-const educationSchema = new mongoose.Schema({
-    school:{
-        type: String,
-        default: ''
-    },
-    degree:{
-        type: String,
-        default: ''
-    },
-    fieldofstudy:{
-        type: String,
-        default: ''
-    },
-});
+const educationSchema = new mongoose.Schema(
+  {
+    school: String,
+    degree: String,
+    fieldOfStudy: String,
+    startDate: Date,
+    endDate: Date
+  },
+  { _id: false }
+);
 
-const workSchema = new mongoose.Schema({
-    company:{
-        type: String,
-        default: ''
-    },
-    position:{
-        type: String,
-        default: ''
-    },
-    years:{
-        type: String,
-        default: ''
+const workSchema = new mongoose.Schema(
+  {
+    company: String,
+    position: String,
+    startDate: Date,
+    endDate: Date,
+    isCurrent: {
+      type: Boolean,
+      default: false
     }
-});
+  },
+  { _id: false }
+);
 
-const profileSchema = new mongoose.Schema({
-    userId:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+const profileSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      unique: true,
+      index: true
     },
-    bio:{
-        type: String,
-        default: ''
+
+    bio: {
+      type: String,
+      maxlength: 500,
+      default: ""
     },
-    currentpost:{
-        type: String,
-        default: ''
+
+    headline: {
+      type: String,
+      default: ""
     },
-    pastwork:{
-        type: [workSchema],
-        default: []
+
+    location: {
+      type: String,
+      default: ""
     },
-    education:{
-        type: [educationSchema],
-        default: []
+
+    skills: {
+      type: [String],
+      default: []
+    },
+
+    website: {
+      type: String,
+      default: ""
+    },
+
+    workExperience: {
+      type: [workSchema],
+      default: []
+    },
+
+    education: {
+      type: [educationSchema],
+      default: []
     }
-});
+  },
+  {
+    timestamps: true
+  }
+);
 
-
-
-const profile = mongoose.model("profile", profileSchema);
-export default profile;
+export default mongoose.model("Profile", profileSchema);
