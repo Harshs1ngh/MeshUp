@@ -17,19 +17,19 @@ Content-Type: application/json
     "password": "123456"
 }
 ###
-GET http://localhost:8000/getUserAndProfile HTTP/1.1
+GET http://localhost:8000/me HTTP/1.1
 Content-Type: application/json
 
-{
-    "token": "d9d466c13b0e97ded64c9069426fb02f1b1f5884b1eaa28401e8c24460e5aa5f"
-}
 
 ###
-GET http://localhost:8000/updateProfileData HTTP/1.1
+PUT http://localhost:8000/profile HTTP/1.1
 Content-Type: application/json
 
 {
-    "token": "d9d466c13b0e97ded64c9069426fb02f1b1f5884b1eaa28401e8c24460e5aa5f",
+  "headline": "Full_stack_developer",
+  "location": "ghaziabad",
+  "skills": ["frontend", "backend"],
+   "website": "mypotfolio",
   "bio": "Full Stack Developer focused on building scalable web applications and AI-driven tools.",
   "currentpost": "MERN Stack Developer",
   "pastwork": [
@@ -41,7 +41,7 @@ Content-Type: application/json
   ],
   "education": [
     {
-       "school": "ingraham",
+       "school": "ingrham",
       "degree": "B.Tech",
       "fieldofstudy": "full stack dev"
      
@@ -51,5 +51,17 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:8000/get_all_users HTTP/1.1
+GET http://localhost:8000/users HTTP/1.1
+Content-Type: application/json
+
+###
+GET http://localhost:8000/harsh/feed/ HTTP/1.1
+Content-Type: application/json
+
+###
+GET http://localhost:8000/comments/6995c9723d359a33ed06655c HTTP/1.1
+Content-Type: application/json
+
+###
+PUT http://localhost:8000/like/6995c9723d359a33ed06655c HTTP/1.1
 Content-Type: application/json
