@@ -1,3 +1,4 @@
+// 📁 backend/models/comment.model.js
 import mongoose from "mongoose";
 
 const commentSchema = new mongoose.Schema(
@@ -20,20 +21,22 @@ const commentSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      minlength: 1,
-      maxlength: 500
+      maxlength: 1000
     },
 
+    // for nested/reply comments
     parentComment: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
       default: null
     },
 
-    isEdited: {
-      type: Boolean,
-      default: false
-    },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }
+    ],
 
     isDeleted: {
       type: Boolean,
@@ -44,5 +47,7 @@ const commentSchema = new mongoose.Schema(
     timestamps: true
   }
 );
+
+commentSchema.index({ postId: 1, createdAt: 1 });
 
 export default mongoose.model("Comment", commentSchema);
