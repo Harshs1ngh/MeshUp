@@ -1,70 +1,107 @@
+// 📁 backend/user.routes.js
 import { Router } from "express";
-import multer from "multer";
-import crypto from "crypto";
 
 import {
-  login,
-  register,
-  upload_profile_picture,
-  updateUserProfile,
-  getUserAndProfile,
-  updateProfileData,
-  get_all_users,
-  check
+  login, logout, register,
+  upload_profile_picture, upload_cover_photo,
+  updateUserProfile, getUserAndProfile,
+  getProfileByUsername, updateProfileData,
+  get_all_users, check,
+  forgotPassword, resetPassword,
 } from "../controllers/user.controller.js";
 
-import { protect } from "../middlewares/auth.js";
+import { protect }                                    from "../middlewares/auth.js";
+import { authLimiter, otpLimiter, apiLimiter, uploadLimiter } from "../middlewares/rateLimiters.js";
+import { validate, validateParam, schemas }           from "../middlewares/validate.js";
+import { profilePicUpload, coverPhotoUpload, handleUploadError } from "../middlewares/upload.js";
 
 const router = Router();
 
-// ---------- Multer Setup ----------
+// ─── Health check ──────────────────────────────────────────────────────────────
+router.get("/", check);
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    const ext = file.originalname.split(".").pop();
-    const name = crypto.randomBytes(16).toString("hex");
-    cb(null, `${name}.${ext}`);
-  }
-});
+// ─── Auth (public) ────────────────────────────────────────────────────────────
+router.post("/register",
+  authLimiter,
+  validate(schemas.register),
+  register,
+);
 
-const upload = multer({
-  storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
-  fileFilter: (req, file, cb) => {
-    if (!file.mimetype.startsWith("image"))
-      return cb(new Error("Only images allowed"));
-    cb(null, true);
-  }
-});
+router.post("/login",
+  authLimiter,
+  validate(schemas.login),
+  login,
+);
 
-router.route('/register').post(register);
-router.route('/login').post(login);
+router.post("/logout",
+  protect,              // must be logged in to log out (prevents CSRF logout)
+  logout,
+);
 
-router.route('/').get(check);
+// ─── Forgot / Reset password — strictest rate limits ──────────────────────────
+router.post("/forgot-password",
+  otpLimiter,
+  validate(schemas.forgotPassword),
+  forgotPassword,
+);
 
-router
-  .route("/me")
-  .get(protect, getUserAndProfile);
+router.post("/reset-password",
+  otpLimiter,
+  validate(schemas.resetPassword),
+  resetPassword,
+);
 
-router
-  .route("/update")
-  .put(protect, updateUserProfile);
+// ─── My profile ───────────────────────────────────────────────────────────────
+router.get("/me",
+  protect,
+  apiLimiter,
+  getUserAndProfile,
+);
 
-router
-  .route("/profile")
-  .put(protect, updateProfileData);
+router.put("/update",
+  protect,
+  apiLimiter,
+  validate(schemas.updateUserInfo),
+  updateUserProfile,
+);
 
-router
-  .route("/users")
-  .get(protect, get_all_users);
+router.put("/profile",
+  protect,
+  apiLimiter,
+  validate(schemas.updateProfile),
+  updateProfileData,
+);
 
-router 
-  .route("/upload_profilePic")
-  .get(protect, upload_profile_picture);
+// ─── Profile picture upload ───────────────────────────────────────────────────
+router.post("/upload_profilePic",
+  protect,
+  uploadLimiter,
+  profilePicUpload.single("profilePic"),
+  handleUploadError,
+  upload_profile_picture,
+);
 
+// ─── Cover photo upload ───────────────────────────────────────────────────────
+router.post("/upload_coverPhoto",
+  protect,
+  uploadLimiter,
+  coverPhotoUpload.single("coverPhoto"),
+  handleUploadError,
+  upload_cover_photo,
+);
 
+// ─── Public profile (must come AFTER /me, /update so :username doesn't eat them)
+router.get("/profile/:username",
+  protect,
+  apiLimiter,
+  getProfileByUsername,
+);
+
+// ─── All users (network suggestions) ─────────────────────────────────────────
+router.get("/users",
+  protect,
+  apiLimiter,
+  get_all_users,
+);
 
 export default router;

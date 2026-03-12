@@ -1,52 +1,65 @@
+// 📁 backend/routes/post.routes.js
 import { Router } from "express";
-import multer from "multer";
-import crypto from "crypto";
 
-import { activecheck, createPost, deletePost, toggleLike } from "../controllers/post.controller.js";
-import { protect } from "../middlewares/auth.js";
+import {
+  getFeed, createPost, deletePost,
+  toggleLike, getUserPosts, getActivityHeatmap,
+} from "../controllers/post.controller.js";
+
+import { protect }                          from "../middlewares/auth.js";
+import { apiLimiter, uploadLimiter }        from "../middlewares/rateLimiters.js";
+import { validate, validateParam, schemas } from "../middlewares/validate.js";
+import { postMediaUpload, handleUploadError, validateFileType } from "../middlewares/upload.js";
 
 const router = Router();
 
-// ---------- Multer Setup (same pattern as user upload) ----------
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    const ext = file.originalname.split(".").pop();
-    const name = crypto.randomBytes(16).toString("hex");
-    cb(null, `${name}.${ext}`);
-  }
-});
-
-const upload = multer({
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB for posts
-  fileFilter: (req, file, cb) => {
-    if (
-      file.mimetype.startsWith("image") ||
-      file.mimetype.startsWith("video")
-    ) {
-      cb(null, true);
-    } else {
-      cb(new Error("Only image or video allowed"));
-    }
-  }
-});
-
-// ---------- Routes ----------
-
-router.get("/:name/feed", activecheck);
-
-router.post(
-  "/post",
+// ─── Feed ─────────────────────────────────────────────────────────────────────
+router.get("/feed",
   protect,
-  upload.single("media"),
-  createPost
+  apiLimiter,
+  getFeed,
 );
-router.delete("/:id", protect, deletePost);
 
-router.put("/like/:id", protect, toggleLike);
+// ─── User posts + heatmap ──────────────────────────────────────────────────────
+router.get("/posts/user/:userId",
+  protect,
+  apiLimiter,
+  validateParam("userId"),       // ensures it's a valid 24-char ObjectId
+  getUserPosts,
+);
+
+router.get("/posts/heatmap/:userId",
+  protect,
+  apiLimiter,
+  validateParam("userId"),
+  getActivityHeatmap,
+);
+
+// ─── Create post ──────────────────────────────────────────────────────────────
+router.post("/post",
+  protect,
+  uploadLimiter,
+  postMediaUpload.single("media"),
+  handleUploadError,
+  validateFileType(true),        // magic-byte check (images + video)
+  validate(schemas.createPost),
+  createPost,
+);
+
+// ─── Delete post (only own posts — controller enforces ownership) ─────────────
+router.delete("/post/:id",
+  protect,
+  apiLimiter,
+  validateParam("id"),
+  deletePost,
+);
+
+// ─── Like / Unlike ────────────────────────────────────────────────────────────
+router.put("/like/:id",
+  protect,
+  apiLimiter,
+  validateParam("id"),
+  toggleLike,
+);
 
 export default router;
