@@ -74,7 +74,7 @@ export default function Sidebar({ isOpen, onClose, onLogout }) {
         >
           {profilePic
             ? <img
-                src={`https://meshup-z0g6.onrender.com/uploads/${profilePic}`}
+                src={profilePic}
                 alt={name}
                 style={{ width:"100%", height:"100%", objectFit:"cover", borderRadius:"50%" }}
               />

@@ -12,7 +12,7 @@ import ActivityHeatmap from "../../components/profile/ActivityHeatmap";
 import styles from "../../styles/profile.module.css";
 import api from "../../services/api";
 
-const BASE = "https://meshup-z0g6.onrender.com/uploads/";
+const BASE = "";
 const COLORS = ["#7c3aed","#5b5bd6","#8b5cf6","#6d28d9","#4f46e5"];
 const colorFor = (s) => COLORS[(s?.charCodeAt(0)||0) % COLORS.length];
 

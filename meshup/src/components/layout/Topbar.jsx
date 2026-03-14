@@ -11,7 +11,7 @@ import {
 import { selectUnreadCount, fetchNotifications } from "../../store/slices/notificationsSlice";
 import styles from "../../styles/layout.module.css";
 
-const BASE = "https://meshup-z0g6.onrender.com/uploads/";
+const BASE = "";
 const COLORS = ["#7c3aed","#5b5bd6","#8b5cf6","#6d28d9","#4f46e5"];
 const colorFor = (str) => COLORS[(str?.charCodeAt(0) || 0) % COLORS.length];
 
