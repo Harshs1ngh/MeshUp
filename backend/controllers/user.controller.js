@@ -28,7 +28,12 @@ export const login = async (req, res) => {
   const match = await bcrypt.compare(password, user.password);
   if (!match) return res.status(400).json({ message: "Wrong password" });
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
-  res.cookie("token", token, { httpOnly: true, sameSite: "strict", maxAge: 7 * 24 * 60 * 60 * 1000 });
+  res.cookie("token", token, { 
+  httpOnly: true, 
+  secure: true,        //  required for HTTPS
+  sameSite: "none",    //  allows cross-domain cookies as the backend and frontend are hosted in diff sites
+  maxAge: 7 * 24 * 60 * 60 * 1000 
+});
   res.json({ message: "Logged in" });
 };
 
