@@ -1,0 +1,113 @@
+/* 📁 src/styles/widgets.module.css */
+
+.widget {
+  background: #13131a; border: 1px solid rgba(255,255,255,.07);
+  border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px;
+}
+.widgetHeader { display: flex; align-items: center; justify-content: space-between; }
+.widgetTitle  { font-size: 13px; font-weight: 600; color: #e8e8f0; }
+.widgetBadge  {
+  font-size: 12px; font-weight: 700; color: #a78bfa;
+  background: rgba(124,58,237,.12); padding: 2px 8px; border-radius: 20px;
+}
+.widgetLink   { background: transparent; border: none; color: #7c3aed; font-size: 12px; cursor: pointer; }
+.widgetLink:hover { opacity: .75; }
+
+/* Profile strength */
+.progressTrack { height: 6px; background: #1a1a24; border-radius: 3px; overflow: hidden; }
+.progressFill  { height: 100%; border-radius: 3px; transition: width .6s cubic-bezier(.4,0,.2,1); }
+
+.profileTasks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.profileTask,
+.profileTaskDone {
+  display: flex; align-items: center; gap: 8px; font-size: 13px; color: #7878a0; cursor: pointer;
+  transition: color .15s ease;
+}
+.profileTask:hover  { color: #e8e8f0; }
+.profileTaskDone    { color: #e8e8f0; cursor: default; }
+.taskCheck {
+  width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(52,211,153,.15); color: #34d399; font-size: 10px;
+  display: flex; align-items: center; justify-content: center;
+}
+.taskCircle { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.1); flex-shrink: 0; }
+.taskPoints { margin-left: auto; font-size: 11px; color: #7c3aed; font-weight: 600; }
+
+/* Suggestions */
+.suggestions  { display: flex; flex-direction: column; gap: 12px; }
+/* ✅ Both class names supported — .suggestion (old) and .suggestionItem (new component) */
+.suggestion,
+.suggestionItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;        /* ✅ prevents children from overflowing */
+}
+.suggestionAvatar {
+  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; color: #fff;
+  overflow: hidden;    /* ✅ clips the img inside the circle */
+  position: relative;
+}
+.suggestionAvatarImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.suggestionInfo { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; overflow: hidden; }
+.suggestionName   { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #e8e8f0; }
+.suggestionRole   { font-size: 11px; color: #7878a0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.suggestionMutual { font-size: 10px; color: #7878a0; opacity: .7; }
+
+.connectBtn {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  border: 1.5px solid rgba(124,58,237,.4); background: transparent;
+  color: #7c3aed; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all .18s ease;
+}
+.connectBtn:hover:not(:disabled) { background: rgba(124,58,237,.12); }
+.connectBtn:disabled { cursor: default; }
+.connectBtnDone    { background: rgba(52,211,153,.12); border-color: rgba(52,211,153,.4); color: #34d399; font-size: 12px; }
+.connectBtnPending { background: rgba(251,191,36,.08); border-color: rgba(251,191,36,.3); color: #fbbf24; font-size: 10px; }
+
+/* Trending */
+.trends  { display: flex; flex-wrap: wrap; gap: 6px; }
+.trendTag {
+  background: #1a1a24; border: 1px solid rgba(255,255,255,.07); border-radius: 20px;
+  color: #7878a0; font-size: 12px; padding: 5px 11px; cursor: pointer; transition: all .18s ease;
+}
+.trendTag:hover { border-color: rgba(124,58,237,.35); color: #a78bfa; background: rgba(124,58,237,.08); }
+
+
+
+/* ── YourActivity widget ── */
+.activityRows { display: flex; flex-direction: column; gap: 0; }
+.activityRow {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 16px; border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.activityRow:last-child { border-bottom: none; }
+.activityIcon {
+  width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 14px;
+}
+.activityRowLabel { flex: 1; font-size: 12px; color: #7878a0; }
+.activityRowVal   { font-size: 16px; font-weight: 700; color: #e8e8f0; min-width: 24px; text-align: right; }
+
+/* ── QuickLinks widget ── */
+.quickLinks { display: flex; flex-direction: column; gap: 2px; padding: 4px 8px 10px; }
+.quickLink {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px; border-radius: 10px; cursor: pointer;
+  border: none; background: transparent; text-align: left; width: 100%;
+  transition: background .15s ease;
+}
+.quickLink:hover { background: rgba(255,255,255,.05); }
+.quickLinkIcon   { font-size: 15px; width: 22px; text-align: center; flex-shrink: 0; }
+.quickLinkText   { flex: 1; font-size: 13px; color: #c8c8e0; }
+.quickLinkArrow  { font-size: 14px; color: #4a4a6a; }

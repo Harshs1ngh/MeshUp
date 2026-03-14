@@ -1,0 +1,516 @@
+/* ================================================
+   Home.module.css — MeshUp
+   Style: Clean dark social app (Instagram/Facebook)
+   Colors: Professional — deep slate, crisp white,
+           electric indigo accent. Not AI-rainbow.
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ── Variables ────────────────────────────────── */
+:root {
+  --bg: #0a0a0f;
+  --surface: #13131a;
+  --surface2: #1c1c26;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-hover: rgba(255, 255, 255, 0.13);
+  --text-primary: #f2f2f7;
+  --text-secondary: #9494aa;
+  --text-muted: #52526a;
+
+  /* Single accent — electric indigo. Sharp, modern, trustworthy. */
+  --accent:       #5b5bd6;
+  --accent-light: #7b7be8;
+  --accent-dim:   rgba(91, 91, 214, 0.14);
+  --accent-glow:  rgba(91, 91, 214, 0.28);
+
+  /* Gradient: deep indigo → violet. Subtle, not rainbow. */
+  --grad:     linear-gradient(135deg, #5b5bd6 0%, #8b5cf6 100%);
+  --grad-btn: linear-gradient(90deg,  #5b5bd6 0%, #7c3aed 100%);
+
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Base ─────────────────────────────────────── */
+.wrapper {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ── Background Glows ─────────────────────────── */
+/* One tonal glow — same hue family, no circus lights */
+.glowPurple,
+.glowBlue,
+.glowPink {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(120px);
+  z-index: 0;
+}
+
+.glowPurple {
+  width: 560px;
+  height: 560px;
+  background: #5b5bd6;
+  opacity: 0.12;
+  top: -180px;
+  left: -120px;
+}
+
+.glowBlue {
+  width: 420px;
+  height: 420px;
+  background: #7c3aed;
+  opacity: 0.08;
+  bottom: -120px;
+  right: -100px;
+}
+
+.glowPink {
+  width: 320px;
+  height: 320px;
+  background: #8b5cf6;
+  opacity: 0.06;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ── Navbar ───────────────────────────────────── */
+.navbar {
+  position: relative;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  height: 64px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(10, 10, 15, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: slideDown 0.4s ease both;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoImg {
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.logoText {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navLogin {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 20px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition), background var(--transition);
+}
+
+.navLogin:hover {
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.navRegister {
+  background: var(--grad-btn);
+  border: none;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 22px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.navRegister:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+/* ── Hero ─────────────────────────────────────── */
+.hero {
+  position: relative;
+  z-index: 5;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
+  padding: 60px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── Hero Left ────────────────────────────────── */
+.heroLeft {
+  flex: 1;
+  max-width: 480px;
+  animation: fadeUp 0.5s 0.1s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tagline {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.heading {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin: 0 0 18px;
+}
+
+.gradientText {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subheading {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 0 0 36px;
+}
+
+/* ── Signup Box ───────────────────────────────── */
+.signupBox {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:focus {
+  border-color: rgba(91, 91, 214, 0.55);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+.primaryBtn {
+  background: var(--grad-btn);
+  border: none;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  width: 100%;
+  transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.primaryBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px var(--accent-glow);
+}
+
+.primaryBtn:active {
+  transform: translateY(0);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.divider span {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.divider p {
+  margin: 0;
+}
+
+.loginBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 13px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  width: 100%;
+  transition: border-color var(--transition), color var(--transition), background var(--transition);
+}
+
+.loginBtn:hover {
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ── Hero Right ───────────────────────────────── */
+.heroRight {
+  position: relative;
+  flex-shrink: 0;
+  width: 340px;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeUp 0.5s 0.25s ease both;
+}
+
+.logoCard {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.heroLogo {
+  position: relative;
+  z-index: 2;
+  animation: floatLogo 4s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+
+.logoCardGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(91, 91, 214, 0.15), transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Floating Cards ───────────────────────────── */
+.floatCard {
+  position: absolute;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+}
+
+.floatCard1 {
+  top: 0;
+  right: -20px;
+  animation: float1 5s 0.5s ease-in-out infinite;
+}
+
+.floatCard2 {
+  bottom: 20px;
+  left: -30px;
+  animation: float2 5s 1s ease-in-out infinite;
+}
+
+.floatCard3 {
+  bottom: 80px;
+  right: -10px;
+  animation: float1 5s 1.5s ease-in-out infinite;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(8px); }
+}
+
+.floatIcon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.floatNum {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.floatLabel {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* ── Footer ───────────────────────────────────── */
+.footer {
+  position: relative;
+  z-index: 5;
+  padding: 24px 40px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.footerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+}
+
+.footerLinks a {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.footerLinks a:hover {
+  color: var(--text-secondary);
+}
+
+.footerCopy {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ── Responsive ───────────────────────────────── */
+@media (max-width: 900px) {
+  .hero {
+    flex-direction: column-reverse;
+    gap: 48px;
+    padding: 40px 24px;
+    align-items: center;
+  }
+
+  .heroLeft {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .heroRight {
+    width: 280px;
+    height: 300px;
+  }
+
+  .logoCard {
+    width: 220px;
+    height: 220px;
+  }
+
+  .floatCard1 { right: -10px; top: -10px; }
+  .floatCard2 { left: -10px; bottom: 10px; }
+  .floatCard3 { display: none; }
+}
+
+@media (max-width: 540px) {
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .navLogin {
+    display: none;
+  }
+
+  .heading {
+    font-size: 30px;
+  }
+
+  .footer {
+    padding: 20px;
+  }
+}

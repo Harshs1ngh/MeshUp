@@ -1,0 +1,262 @@
+/* 📁 src/styles/landing.module.css — MeshUp minimal landing */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&display=swap');
+
+/* ── Custom cursor ─────────────────────────────────────────── */
+.cursorDot {
+  position: fixed; z-index: 9999; pointer-events: none;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #a78bfa;
+  will-change: transform;
+  box-shadow: 0 0 12px 4px rgba(167,139,250,.7),
+              0 0 30px 8px rgba(124,58,237,.4);
+}
+.cursorRing {
+  position: fixed; z-index: 9998; pointer-events: none;
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1.5px solid rgba(167,139,250,.5);
+  will-change: transform;
+  box-shadow: 0 0 20px 4px rgba(124,58,237,.15);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.cursorTrail {
+  position: fixed; z-index: 9997; pointer-events: none;
+  width: 80px; height: 80px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,58,237,.12) 0%, transparent 70%);
+  will-change: transform;
+}
+
+/* ── Page ──────────────────────────────────────────────────── */
+.page {
+  min-height: 100vh;
+  background: #070709;
+  color: #e4e4ed;
+  font-family: 'Geist', 'DM Sans', sans-serif;
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
+  opacity: 0;
+  transition: opacity .6s ease;
+}
+.ready { opacity: 1; }
+
+/* ── Dot grid ──────────────────────────────────────────────── */
+.grid {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,.055) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 100%);
+}
+
+/* ── Cursor-following spotlight ─────────────────────────────── */
+.spotlight {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(
+    600px circle at var(--cx, 50%) var(--cy, 50%),
+    rgba(124,58,237,.07) 0%,
+    transparent 70%
+  );
+  transition: background .05s linear;
+}
+
+/* ── Violet wash ────────────────────────────────────────────── */
+.wash {
+  position: absolute; pointer-events: none; z-index: 0;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(109,40,217,.11) 0%, transparent 65%);
+  top: -220px; left: -180px;
+  animation: breathe 10s ease-in-out infinite alternate;
+}
+.wash2 {
+  position: absolute; pointer-events: none; z-index: 0;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(79,70,229,.08) 0%, transparent 65%);
+  bottom: -150px; right: -100px;
+  animation: breathe 14s ease-in-out infinite alternate-reverse;
+}
+@keyframes breathe {
+  from { transform: scale(1);    opacity: .7; }
+  to   { transform: scale(1.15); opacity: 1;  }
+}
+
+/* ── Nav ───────────────────────────────────────────────────── */
+.nav {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 52px;
+  animation: fadeDown .7s ease .1s both;
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.logo { display: flex; align-items: center; gap: 9px; }
+.logoM {
+  width: 30px; height: 30px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 500; color: #fff;
+}
+.logoName {
+  font-size: 16px; font-weight: 400;
+  color: rgba(228,228,237,.7);
+  letter-spacing: -.2px;
+}
+
+.navRight  { display: flex; align-items: center; gap: 24px; }
+.navLink {
+  font-size: 13px; font-weight: 400; color: rgba(228,228,237,.35);
+  text-decoration: none; transition: color .2s ease;
+}
+.navLink:hover { color: rgba(228,228,237,.85); }
+
+.navCta {
+  font-size: 13px; font-weight: 500;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 8px; color: rgba(228,228,237,.7);
+  padding: 8px 18px;
+  transition: background .2s, border-color .2s, color .2s, transform .35s ease, box-shadow .3s;
+}
+.navCta:hover {
+  background: rgba(124,58,237,.15);
+  border-color: rgba(124,58,237,.4);
+  color: #e4e4ed;
+  box-shadow: 0 0 24px rgba(124,58,237,.2);
+}
+
+/* ── Hero ──────────────────────────────────────────────────── */
+.hero {
+  position: relative; z-index: 1;
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  padding: 0 32px 60px;
+  width: 100%;
+  gap: 0;
+}
+
+.eyebrow {
+  font-size: 11px; font-weight: 400;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: rgba(167,139,250,.55);
+  margin-bottom: 28px;
+  animation: fadeUp .7s ease .25s both;
+}
+
+.headline {
+  display: flex; flex-direction: column; align-items: center;
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(54px, 8vw, 100px);
+  font-weight: 400; line-height: 1.03;
+  letter-spacing: -3px;
+  color: #f0f0f8;
+  margin: 0 0 36px;
+}
+.line1 { animation: fadeUp .7s ease .35s both; }
+.line2 { animation: fadeUp .7s ease .45s both; }
+
+.headline em {
+  font-style: italic;
+  -webkit-text-stroke: 1px rgba(167,139,250,.6);
+  color: transparent;
+  background: linear-gradient(135deg, rgba(167,139,250,.95), rgba(124,58,237,.7));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 30px rgba(124,58,237,.35));
+}
+
+.sub {
+  font-size: clamp(15px, 1.7vw, 19px);
+  font-weight: 300; line-height: 1.8;
+  color: rgba(228,228,237,.35);
+  margin-bottom: 48px;
+  max-width: 460px;
+  animation: fadeUp .7s ease .55s both;
+}
+
+/* ── Buttons ───────────────────────────────────────────────── */
+.actions {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 72px;
+  animation: fadeUp .7s ease .65s both;
+}
+
+.btnPrimary {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 14px; font-weight: 500;
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+  border: none; border-radius: 10px; color: #fff;
+  padding: 14px 28px;
+  box-shadow: 0 0 40px rgba(124,58,237,.3),
+              0 0 80px rgba(124,58,237,.1);
+  transition: box-shadow .3s ease, opacity .2s, transform .35s ease;
+}
+.btnPrimary:hover {
+  box-shadow: 0 0 60px rgba(124,58,237,.55),
+              0 0 120px rgba(124,58,237,.2);
+  opacity: .92;
+}
+
+.btnGhost {
+  font-size: 14px; font-weight: 400;
+  background: none; border: none;
+  color: rgba(228,228,237,.28);
+  transition: color .2s ease;
+  padding: 0;
+}
+.btnGhost:hover { color: rgba(228,228,237,.65); }
+
+/* ── Stat pills ────────────────────────────────────────────── */
+.pills {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  animation: fadeUp .7s ease .75s both;
+}
+.pill {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 14px 24px;
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(255,255,255,.055);
+  border-radius: 12px;
+  transition: border-color .3s, box-shadow .3s, transform .3s;
+}
+.pill:hover {
+  border-color: rgba(167,139,250,.25);
+  box-shadow: 0 0 30px rgba(124,58,237,.12);
+  transform: translateY(-2px);
+}
+.pillNum {
+  font-family: 'Instrument Serif', serif;
+  font-size: 24px; line-height: 1; color: rgba(167,139,250,.85);
+}
+.pillLabel {
+  font-size: 11px; font-weight: 300;
+  color: rgba(228,228,237,.28);
+  letter-spacing: .5px;
+}
+
+/* ── Footer ────────────────────────────────────────────────── */
+.footer {
+  position: relative; z-index: 1;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 22px 52px;
+  border-top: 1px solid rgba(255,255,255,.04);
+  font-size: 12px; color: rgba(228,228,237,.18);
+  animation: fadeUp .7s ease .85s both;
+}
+
+/* ── Keyframes ─────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .nav  { padding: 22px 24px; }
+  .hero { padding: 0 24px 48px; }
+  .footer { padding: 18px 24px; flex-direction: column; gap: 6px; align-items: center; text-align: center; }
+  .headline { letter-spacing: -1.5px; }
+  .pills { gap: 8px; }
+  .actions { flex-direction: column; width: 100%; }
+  .btnPrimary { justify-content: center; width: 100%; }
+  .cursorDot, .cursorRing, .cursorTrail { display: none; }
+}
