@@ -9,7 +9,7 @@ import {
 import { protect }                          from "../middlewares/auth.js";
 import { apiLimiter, uploadLimiter }        from "../middlewares/rateLimiters.js";
 import { validate, validateParam, schemas } from "../middlewares/validate.js";
-import { postMediaUpload, handleUploadError, validateFileType } from "../middlewares/upload.js";
+import { postMediaUpload, handleUploadError} from "../middlewares/upload.js";
 
 const router = Router();
 
