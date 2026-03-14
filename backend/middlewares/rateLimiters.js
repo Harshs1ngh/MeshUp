@@ -1,4 +1,3 @@
-// 📁 backend/middlewares/rateLimiters.js
 import rateLimit from "express-rate-limit";
 
 /* ── Shared response formatter ── */

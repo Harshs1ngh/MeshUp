@@ -1,4 +1,3 @@
-// 📁 backend/controllers/notification.controller.js
 import Notification from "../models/notification.model.js";
 
 // ─── GET MY NOTIFICATIONS ─────────────────────────────────────────────────────

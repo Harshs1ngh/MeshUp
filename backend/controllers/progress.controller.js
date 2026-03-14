@@ -1,4 +1,3 @@
-// 📁 backend/controllers/progress.controller.js
 import { TrackedSite, Session } from "../models/progress.model.js";
 
 // ── GET all tracked sites for the current user ─────────────────────────────

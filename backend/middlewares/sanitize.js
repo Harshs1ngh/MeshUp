@@ -1,6 +1,3 @@
-// 📁 backend/middlewares/sanitize.js
-// Guards against XSS in text fields and NoSQL injection via $ keys.
-// Applied globally before routes — req.body is cleaned in place.
 
 /* ─── Strip HTML tags from a string (XSS prevention) ─────────────────────── */
 const stripHtml = (str) =>

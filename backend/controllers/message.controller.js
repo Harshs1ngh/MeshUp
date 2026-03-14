@@ -1,4 +1,3 @@
-// 📁 backend/controllers/message.controller.js
 import mongoose from "mongoose";
 import { Conversation, Message } from "../models/message.model.js";
 
