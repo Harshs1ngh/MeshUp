@@ -1,4 +1,4 @@
-// 📁 src/components/feed/PostCard.jsx
+// 📁 src/components/feed/ PostCard.jsx
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -11,7 +11,7 @@ import { selectUser } from "../../store/slices/authSlice";
 import { selectMyProfile } from "../../store/slices/profileSlice";
 import styles from "../../styles/feed.module.css";
 
-const BASE      = "http://localhost:8000/uploads/";
+const BASE      = "";
 const COLORS    = ["#7c3aed","#5b5bd6","#8b5cf6","#6d28d9","#4f46e5","#6d6de0"];
 const colorFor  = (str) => COLORS[(str?.charCodeAt(0) || 0) % COLORS.length];
 const getInitial = (name) => name?.[0]?.toUpperCase() || "?";
@@ -38,7 +38,7 @@ function CommentRow({ comment, postId, myId }) {
     <div className={styles.comment}>
       <div className={styles.commentAvatar} style={{ background: colorFor(name) }}>
         {pic
-          ? <img src={`${BASE}${pic}`} alt={name} className={styles.commentAvatarImg} />
+          ? <img src={pic} alt={name} className={styles.commentAvatarImg} />
           : getInitial(name)
         }
       </div>
@@ -150,7 +150,7 @@ export default function PostCard({ post }) {
           onClick={() => router.push(`/users/${author.username}`)}
         >
           {author.profilePicture
-            ? <img src={`${BASE}${author.profilePicture}`} alt={authorName} className={styles.postAvatarImg} />
+            ? <img src={author.profilePicture} alt={authorName} className={styles.postAvatarImg} />
             : getInitial(authorName)
           }
         </div>
@@ -180,12 +180,12 @@ export default function PostCard({ post }) {
       {/* ── Media ── */}
       {post.media && post.mediaType === "image" && (
         <div className={styles.postMedia}>
-          <img src={`${BASE}${post.media}`} alt="Post" className={styles.postMediaImg} />
+          <img src={post.media} alt="Post" className={styles.postMediaImg} />
         </div>
       )}
       {post.media && post.mediaType === "video" && (
         <div className={styles.postMedia}>
-          <video src={`${BASE}${post.media}`} controls className={styles.postMediaVideo} />
+          <video src={post.media} controls className={styles.postMediaVideo} />
         </div>
       )}
 
@@ -265,7 +265,7 @@ export default function PostCard({ post }) {
           <form className={styles.commentForm} onSubmit={handleSubmit}>
             <div className={styles.commentInputAvatar} style={{ background: colorFor(myName) }}>
               {myPic
-                ? <img src={`${BASE}${myPic}`} alt={myName} className={styles.commentAvatarImg} />
+                ? <img src={myPic} alt={myName} className={styles.commentAvatarImg} />
                 : getInitial(myName)
               }
             </div>
