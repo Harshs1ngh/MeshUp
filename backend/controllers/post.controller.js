@@ -14,7 +14,7 @@ export const createPost = async (req, res) => {
     let mediaType = "none";
 
     if (req.file) {
-      media     = req.file.filename;
+      media     = req.file.path;
       mediaType = req.file.mimetype.startsWith("image") ? "image" : "video";
     }
 

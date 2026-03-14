@@ -40,8 +40,7 @@ router.post("/post",
   protect,
   uploadLimiter,
   postMediaUpload.single("media"),
-  handleUploadError,
-  validateFileType(true),        // magic-byte check (images + video)
+  handleUploadError,       
   validate(schemas.createPost),
   createPost,
 );

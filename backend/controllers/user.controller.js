@@ -144,7 +144,7 @@ export const updateProfileData = async (req, res) => {
 export const upload_profile_picture = async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ message: "No file" });
-    req.user.profilePicture = req.file.filename;
+    req.user.profilePicture = req.file.path;
     await req.user.save();
     res.json({ message: "Profile picture updated", filename: req.file.filename });
   } catch (err) {
@@ -239,7 +239,7 @@ export const upload_cover_photo = async (req, res) => {
     let profile = await Profile.findOne({ userId: req.user._id });
     if (!profile) profile = new Profile({ userId: req.user._id });
 
-    profile.coverPhoto = req.file.filename;
+    profile.coverPhoto = req.file.path;
     await profile.save();
 
     const updated = await Profile.findById(profile._id)
