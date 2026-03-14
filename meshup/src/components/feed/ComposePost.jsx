@@ -6,7 +6,7 @@ import { selectUser } from "../../store/slices/authSlice";
 import { selectMyProfile } from "../../store/slices/profileSlice";
 import styles from "../../styles/feed.module.css";
 
-const BASE = "http://localhost:8000/uploads/";
+const BASE = "";
 
 export default function ComposePost() {
   const dispatch  = useDispatch();
@@ -59,7 +59,7 @@ export default function ComposePost() {
       {/* Avatar */}
       <div className={styles.composeAvatar}>
         {profilePic ? (
-          <img src={`${BASE}${profilePic}`} alt={authorName} className={styles.composeAvatarImg} />
+          <img src={profilePic} alt={authorName} className={styles.composeAvatarImg} />
         ) : (
           initial
         )}
