@@ -23,7 +23,7 @@ const imgUrl = (val) => {
   if (!val) return null;
   if (val.startsWith("http")) return val;                    // already full URL
   if (val.startsWith("meshup/")) return `${CLOUD}/${val}`;  // Cloudinary public_id
-  return `http://localhost:8000/uploads/${val}`;             // legacy local
+  return null;            
 };
 
 const COLORS = ["#7c3aed","#5b5bd6","#8b5cf6","#6d28d9","#4f46e5"];
