@@ -28,10 +28,14 @@ export default function Register() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const res = await dispatch(registerUser(formData));
-    if (res.meta.requestStatus === "fulfilled") router.push("/");
+  e.preventDefault();
+  const payload = {
+    ...formData,
+    name: `${formData.firstName.trim()} ${formData.lastName.trim()}`,
   };
+  const res = await dispatch(registerUser(payload));
+  if (res.meta.requestStatus === "fulfilled") router.push("/");
+};
 
   const progressWidth = step === 1 ? "50%" : "100%";
 
