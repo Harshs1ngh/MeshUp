@@ -10,12 +10,13 @@ const handler = (req, res) =>
    Tightest limit — prevents brute force and credential stuffing.
    5 attempts per 15 minutes per IP.                               ──────────── */
 export const authLimiter = rateLimit({
-  windowMs:        15 * 60 * 1000,  // 15 minutes
-  max:             5,
+  windowMs: 15 * 60 * 1000,
+  max: 5,
   standardHeaders: true,
-  legacyHeaders:   false,
+  legacyHeaders: false,
   handler,
-  skipSuccessfulRequests: true,      // only failed attempts count toward limit
+  skipSuccessfulRequests: true,
+  skip: () => process.env.NODE_ENV !== "production", // ← add this
 });
 
 /* ─── OTP / password-reset routes

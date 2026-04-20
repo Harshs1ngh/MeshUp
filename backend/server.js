@@ -1,4 +1,3 @@
-// 📁 backend/server.js
 import express      from "express";
 import dotenv       from "dotenv";
 import cors         from "cors";
@@ -51,14 +50,11 @@ const __dirname  = path.dirname(__filename);
 const uploadsDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
-// ══════════════════════════════════════════════════════════════════════════════
 //  SECURITY MIDDLEWARE
-// ══════════════════════════════════════════════════════════════════════════════
-
-/* ── 1. Helmet — security headers ── */
+/*  1. Helmet — security headers */
 app.use(
   helmet({
-    crossOriginResourcePolicy: { policy: "cross-origin" }, // allow <img> from port 8000
+    crossOriginResourcePolicy: { policy: "cross-origin" }, // so this allow <img> from port 8000
     contentSecurityPolicy: IS_PROD ? {
       directives: {
         defaultSrc: ["'self'"],
@@ -72,10 +68,22 @@ app.use(
 );
 
 /* ── 2. CORS — only allow our frontend ── */
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:5173",
+  "https://mesh-up-olive.vercel.app",
+];
+
 app.use(cors({
-  origin:      CLIENT_URL,
-  credentials: true,              // required for cookies
-  methods:     ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
@@ -109,7 +117,7 @@ app.use("/uploads", (req, res, next) => {
 
 // ══════════════════════════════════════════════════════════════════════════════
 //  ROUTES
-// ══════════════════════════════════════════════════════════════════════════════
+
 app.use(userRoutes);
 app.use(postRoutes);
 app.use(commentRoutes);
@@ -125,7 +133,8 @@ app.use((req, res) => {
 
 // ─── Global error handler ──────────────────────────────────────────────────────
 app.use((err, req, res, next) => {
-  console.error(`[ERROR] ${req.method} ${req.path}:`, err.message);
+console.error(`[ERROR] ${req.method} ${req.path}:`,err.message);
+
 
   // Don't leak stack traces in production
   const message = IS_PROD ? "Something went wrong" : err.message;
@@ -134,7 +143,7 @@ app.use((err, req, res, next) => {
 
 // ══════════════════════════════════════════════════════════════════════════════
 //  SOCKET.IO
-// ══════════════════════════════════════════════════════════════════════════════
+
 const io = new Server(httpServer, {
   cors: { origin: CLIENT_URL, credentials: true },
   // Prevent memory exhaustion from too many concurrent connections
@@ -174,7 +183,7 @@ io.use(async (socket, next) => {
 /* ── Online users map ── */
 const onlineUsers = new Map(); // userId → socketId
 
-io.on("connection", (socket) => {
+io.on("connection", (socket) => {                // showes in log that which user is connected in messages 
   try {
     const userId = String(socket.user._id);
     onlineUsers.set(userId, socket.id);
@@ -249,7 +258,7 @@ export { io };
 
 // ══════════════════════════════════════════════════════════════════════════════
 //  START
-// ══════════════════════════════════════════════════════════════════════════════
+
 const start = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URL, {
@@ -257,10 +266,10 @@ const start = async () => {
       maxPoolSize:     10,     // connection pool
       serverSelectionTimeoutMS: 5000,
     });
-    console.log("✅ MongoDB connected");
+    console.log(" MongoDB connected");
 
     httpServer.listen(PORT, () =>
-      console.log(`✅ Server running on port ${PORT} [${IS_PROD ? "production" : "development"}]`)
+      console.log(` Server running on port ${PORT} [${IS_PROD ? "production" : "development"}]`)
     );
   } catch (err) {
     console.error("Startup error:", err);

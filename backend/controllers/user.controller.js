@@ -10,17 +10,24 @@ export const check = async (req, res) => {
 };
 
 export const register = async (req, res) => {
-  const { name, email, username, password } = req.body;
-  if (!name || !email || !username || !password)
+  const { name, email, password } = req.body;
+
+  if (!name || !email || !password)
     return res.status(400).json({ message: "Missing fields" });
+
+  // Auto-generate a unique username from email prefix
+  const baseUsername = email.split("@")[0].toLowerCase().replace(/[^a-z0-9]/g, "");
+  const username = baseUsername + Math.random().toString(36).slice(2, 6);
+
   const exists = await User.findOne({ $or: [{ email }, { username }] });
   if (exists) return res.status(400).json({ message: "User exists" });
+
   const hash = await bcrypt.hash(password, 10);
   const user = await User.create({ name, email, username, password: hash });
   await Profile.create({ userId: user._id });
+
   res.status(201).json({ message: "Registered" });
 };
-
 export const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email }).select("+password");
@@ -28,11 +35,11 @@ export const login = async (req, res) => {
   const match = await bcrypt.compare(password, user.password);
   if (!match) return res.status(400).json({ message: "Wrong password" });
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
-  res.cookie("token", token, { 
-  httpOnly: true, 
-  secure: true,        //  required for HTTPS
-  sameSite: "none",    //  allows cross-domain cookies as the backend and frontend are hosted in diff sites
-  maxAge: 7 * 24 * 60 * 60 * 1000 
+res.cookie("token", token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",    // ✅ false on localhost
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",  // ✅ lax on localhost
+  maxAge: 7 * 24 * 60 * 60 * 1000
 });
   res.json({ message: "Logged in" });
 };
