@@ -42,19 +42,16 @@ const maxLen     = (v, n) => typeof v === "string" && v.length <= n;
 export const schemas = {
 
   /* ── Auth ── */
-  register: ({ name, email, username, password }) => {
-    if (!notEmpty(name))                return err("Name is required");
-    if (!maxLen(name, 80))              return err("Name too long (max 80)");
-    if (!notEmpty(email))               return err("Email is required");
-    if (!isEmail(email))                return err("Invalid email address");
-    if (!notEmpty(username))            return err("Username is required");
-    if (!/^[a-z0-9_]{3,30}$/.test(username))
-                                        return err("Username must be 3-30 chars: lowercase letters, numbers, underscores only");
-    if (!notEmpty(password))            return err("Password is required");
-    if (password.length < 8)            return err("Password must be at least 8 characters");
-    if (password.length > 128)          return err("Password too long");
-    return [];
-  },
+register: ({ name, email, password }) => {
+  if (!notEmpty(name))       return err("Name is required");
+  if (!maxLen(name, 80))     return err("Name too long (max 80)");
+  if (!notEmpty(email))      return err("Email is required");
+  if (!isEmail(email))       return err("Invalid email address");
+  if (!notEmpty(password))   return err("Password is required");
+  if (password.length < 8)   return err("Password must be at least 8 characters");
+  if (password.length > 128) return err("Password too long");
+  return [];
+},
 
   login: ({ email, password }) => {
     if (!notEmpty(email))               return err("Email is required");
