@@ -26,8 +26,11 @@ export const registerUser = createAsyncThunk(
       const res = await api.get("/me");
       return res.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err.response?.data?.message || "Registration failed");
-    }
+  console.log("STATUS:", err.response?.status);
+  console.log("DATA:", err.response?.data);
+  console.log("MESSAGE:", err.message);
+  return thunkAPI.rejectWithValue(err.response?.data?.message || "Registration failed");
+}
   }
 );
 
