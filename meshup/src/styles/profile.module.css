@@ -224,14 +224,20 @@ a.metaChip:hover { border-color: rgba(124,58,237,.3); color: #a78bfa; }
 .tabBtnActive { color: #a78bfa; border-bottom-color: #7c3aed; }
 
 /* ─── Content grid ───────────────────────────────────────────────────────── */
+ 
 .contentGrid {
   display: grid;
-  grid-template-columns: 1fr 280px;
+  grid-template-columns: minmax(0, 1fr) 280px;   /* was: 1fr 280px */
   gap: 20px;
   align-items: start;
 }
+.sideCol {
+  display: flex; flex-direction: column; gap: 16px;
+  position: sticky; top: 80px;
+  min-width: 0;                                   /* ADD */
+}
 .mainCol { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
-.sideCol { display: flex; flex-direction: column; gap: 16px; position: sticky; top: 80px; }
+
 
 /* ─── Card ───────────────────────────────────────────────────────────────── */
 .card {
@@ -563,11 +569,11 @@ a.metaChip:hover { border-color: rgba(124,58,237,.3); color: #a78bfa; }
 @media (max-width: 900px) {
   .profilePage { padding: 16px 14px; gap: 16px; }
 
-  /* sidebar drops below main content */
-  .contentGrid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
+  /* sidebar drops below main content */ 
+.contentGrid {
+  grid-template-columns: minmax(0, 1fr);          
+  gap: 16px;
+}
   .sideCol {
     position: static;          /* un-stick it */
     flex-direction: row;       /* lay sidebar cards side by side */
