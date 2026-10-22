@@ -671,7 +671,7 @@ export default function MyProfile() {
                               </div>
                               <div className={styles.entryActions}>
                                 <button className={styles.entryEditBtn} onClick={() => openEditWork(i)}>✏️</button>
-                                <button className={styles.entryDeleteBtn} onClick={() => handleDeleteWork(i)}>🗑</button>
+                                <button className={styles.entryDeleteBtn} onClick={() => handleDeleteWork(i)}>⛓️‍💥</button>
                               </div>
                             </div>
                           </div>
@@ -703,7 +703,7 @@ export default function MyProfile() {
                               </div>
                               <div className={styles.entryActions}>
                                 <button className={styles.entryEditBtn} onClick={() => openEditEdu(i)}>✏️</button>
-                                <button className={styles.entryDeleteBtn} onClick={() => handleDeleteEdu(i)}>🗑</button>
+                                <button className={styles.entryDeleteBtn} onClick={() => handleDeleteEdu(i)}>⛓️‍💥</button>
                               </div>
                             </div>
                           </div>

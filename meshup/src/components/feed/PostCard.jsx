@@ -169,7 +169,7 @@ export default function PostCard({ post }) {
 
         {isMyPost && (
           <button className={styles.postMenu} onClick={handleDelete} title="Delete post">
-            🗑
+            ⛓️‍💥
           </button>
         )}
       </div>

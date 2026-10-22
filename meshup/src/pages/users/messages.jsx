@@ -84,12 +84,12 @@ function MessageRow({ msg, isMe, myPic, myName, onEdit, onDelete }) {
                   {withinWindow && (
                     <button className={`${styles.msgMenuItem} ${styles.msgMenuDanger}`}
                       onClick={() => { setShowMenu(false); onDelete(msg, "everyone"); }}>
-                      🗑 Delete for everyone
+                      Delete for everyone
                     </button>
                   )}
                   <button className={`${styles.msgMenuItem} ${styles.msgMenuDanger}`}
                     onClick={() => { setShowMenu(false); onDelete(msg, "me"); }}>
-                    🗑 Delete for me
+                    Delete for me
                   </button>
                 </div>
               )}
