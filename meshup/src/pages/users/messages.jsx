@@ -356,7 +356,7 @@ export default function Messages() {
         <aside className={styles.convList}>
           <div className={styles.convListHeader}>
             <h2 className={styles.convListTitle}>Messages</h2>
-            <button className={styles.newMsgBtn} onClick={() => { setShowNewMsg((v) => !v); setSearchQuery(""); setSearchResults([]); }}>🔎</button>
+            <button className={styles.newMsgBtn} onClick={() => { setShowNewMsg((v) => !v); setSearchQuery(""); setSearchResults([]); }}>📡</button>
           </div>
 
           {showNewMsg && (

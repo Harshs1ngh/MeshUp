@@ -170,7 +170,7 @@ export default function UserProfile() {
             </div>
             <div className={styles.heroActions}>
               <button className={styles.msgBtn} onClick={handleMessage}>
-                💬 Message
+                 Message
               </button>
               <button
                 className={`${styles.connectBtn} ${isConnected ? styles.connectBtnDone : ""} ${isPendingSent ? styles.connectBtnPending : ""}`}
@@ -192,7 +192,7 @@ export default function UserProfile() {
               {profile.location && <span className={styles.metaChip}>📍 {profile.location}</span>}
               {profile.website  && <a href={profile.website} target="_blank" rel="noreferrer" className={styles.metaChip}>🔗 Website</a>}
               {profile.connectionCount > 0 && (
-                <span className={styles.metaChip}>🤝 {profile.connectionCount} connection{profile.connectionCount !== 1 ? "s" : ""}</span>
+                <span className={styles.metaChip}> {profile.connectionCount} connection{profile.connectionCount !== 1 ? "s" : ""}</span>
               )}
             </div>
             {profile.skills?.length > 0 && (
@@ -373,7 +373,7 @@ export default function UserProfile() {
               <div style={{ padding: "8px 20px 16px", display: "flex", flexDirection: "column", gap: 8 }}>
                 <button className={styles.sideActionBtn} onClick={handleMessage}>💬 Send a message</button>
                 {!isConnected && !isPendingSent && (
-                  <button className={styles.sideActionBtn} onClick={handleConnect}>🤝 Connect</button>
+                  <button className={styles.sideActionBtn} onClick={handleConnect}> Connect</button>
                 )}
                 {profile.website && (
                   <a href={profile.website} target="_blank" rel="noreferrer" className={styles.sideActionBtn}>🔗 Visit website</a>

@@ -522,7 +522,7 @@ export default function MyProfile() {
               : <div className={styles.coverGradient} />
             }
             <div className={styles.coverOverlay}>
-              {coverUploading ? <><span className={styles.spinnerSm} /> Uploading…</> : <>📷 Change cover photo</>}
+              {coverUploading ? <><span className={styles.spinnerSm} /> Uploading…</> : <> Change cover photo</>}
             </div>
             <input ref={coverRef} type="file" accept="image/*" style={{ display:"none" }} onChange={handleCoverFileSelect} />
           </div>
@@ -532,12 +532,12 @@ export default function MyProfile() {
             <div className={styles.heroAvatarWrap}>
               <Avatar pic={profilePic} name={name} size={100} />
               <button className={styles.picBtn} onClick={(e) => { e.stopPropagation(); picRef.current.click(); }} disabled={isUploading}>
-                {isUploading ? <span className={styles.spinnerSm} /> : "📷"}
+                {isUploading ? <span className={styles.spinnerSm} /> : "❗"}
               </button>
               <input ref={picRef} type="file" accept="image/*" style={{ display:"none" }} onChange={handlePicChange} />
             </div>
             <div className={styles.heroActions}>
-              <button className={styles.editProfileBtn} onClick={() => setEditSection("basic")}>✏️ Edit profile</button>
+              <button className={styles.editProfileBtn} onClick={() => setEditSection("basic")}> Edit profile </button>
               <button className={styles.viewPublicBtnHero} onClick={() => router.push(`/users/${username}`)}>View public ↗</button>
             </div>
           </div>
@@ -568,7 +568,7 @@ export default function MyProfile() {
               )}
               {(stats?.connections || 0) > 0 && (
                 <button className={`${styles.metaChip} ${styles.metaChipClickable}`} onClick={() => setActiveTab("connections")}>
-                  <span className={styles.metaIcon}>🤝</span> {stats.connections} connection{stats.connections !== 1 ? "s" : ""}
+                  <span className={styles.metaIcon}></span> {stats.connections} connection{stats.connections !== 1 ? "s" : ""}
                 </button>
               )}
             </div>

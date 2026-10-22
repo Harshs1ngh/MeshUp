@@ -103,7 +103,7 @@ function AddSiteModal({ onClose, onAdd }) {
           <input
             ref={nameRef}
             className={styles.input}
-            placeholder="e.g. YouTube, Notion, GitHub"
+            placeholder="e.g. YouTube, Notion, GitHub, Leetcode"
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={handleKey}
