@@ -532,7 +532,7 @@ export default function MyProfile() {
             <div className={styles.heroAvatarWrap}>
               <Avatar pic={profilePic} name={name} size={100} />
               <button className={styles.picBtn} onClick={(e) => { e.stopPropagation(); picRef.current.click(); }} disabled={isUploading}>
-                {isUploading ? <span className={styles.spinnerSm} /> : "😎"}
+                {isUploading ? <span className={styles.spinnerSm} /> : "➕"}
               </button>
               <input ref={picRef} type="file" accept="image/*" style={{ display:"none" }} onChange={handlePicChange} />
             </div>
