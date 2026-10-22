@@ -89,7 +89,7 @@ export default function ComposePost() {
         {(text || mediaFile) && (
           <div className={styles.composeActions}>
             <button className={styles.composeMediaBtn} type="button" onClick={() => fileRef.current.click()}>
-              📷 Photo / Video
+               Photo / Video
             </button>
             <button
               className={styles.composeSubmit}
@@ -103,7 +103,7 @@ export default function ComposePost() {
 
         {!text && !mediaFile && (
           <button className={styles.composeMediaBtnIdle} type="button" onClick={() => fileRef.current.click()}>
-            📷 Photo / Video
+             Photo / Video
           </button>
         )}
 
