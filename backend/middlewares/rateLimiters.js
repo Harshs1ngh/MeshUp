@@ -11,13 +11,14 @@ const handler = (req, res) =>
    5 attempts per 15 minutes per IP.                               ──────────── */
 export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 5,
+  max: 10,
   standardHeaders: true,
   legacyHeaders: false,
   handler,
   skipSuccessfulRequests: true,
   skip: () => process.env.NODE_ENV !== "production", // ← add this
 });
+ 
 
 /* ─── OTP / password-reset routes
    Extra strict — prevents code enumeration attacks.
